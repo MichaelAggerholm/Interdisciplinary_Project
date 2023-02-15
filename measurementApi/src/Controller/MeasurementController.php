@@ -52,7 +52,7 @@ class MeasurementController extends AbstractController
         $measurement = new Measurement();
         $measurement->setHardwareUnitId($hardwareUnit);
         $measurement->setMeasurementTypeId($measurementType);
-        $measurement->setValue((float)$request->query->get('value'));
+        $measurement->setValue($request->request->get('value'));
         $measurement->setCreatedDate(new DateTime());
         $measurement->setEditedDate(new DateTime());
 
