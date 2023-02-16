@@ -51,7 +51,7 @@ export default class App extends React.Component {
       return (
         <View style={styles.container}>
           <Text style={styles.title}>Measurements</Text>
-          {/* Tjek op på slice returnerer 20 sidste målinger */}
+          {/* Display the latest 5 measurements from API */}
           {measurements.slice(Math.max(measurements.length - 5, 0))}
         </View>
       )
