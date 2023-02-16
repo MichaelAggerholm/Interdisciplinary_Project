@@ -42,7 +42,7 @@ export default class App extends React.Component {
         </View>
       )
     } else {
-      let hardwarePlacements = this.state.dataSource.map((val, key) => {
+      let measurements = this.state.dataSource.map((val, key) => {
         return  <View key={key} style={styles.item}>
                   <Text>{val.hardwareUnit} - {val.measurementType} : {val.value}</Text>
                 </View>
@@ -51,7 +51,8 @@ export default class App extends React.Component {
       return (
         <View style={styles.container}>
           <Text style={styles.title}>Measurements</Text>
-          {hardwarePlacements.slice(0, 20)}
+          {/* Tjek op på slice returnerer 20 sidste målinger */}
+          {measurements.slice(Math.max(measurements.length - 5, 0))}
         </View>
       )
     }
