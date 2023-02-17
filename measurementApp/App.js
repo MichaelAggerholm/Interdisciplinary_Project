@@ -12,6 +12,15 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchData(); // Hent data ved start
+
+    var self = this;
+    this.interval = setInterval(() => {
+      self.fetchData();
+    }, 5000); // Hent data hvert femte sekund
+  }
+
+  fetchData() {
     var params = {
       method: 'GET',
       headers: {
@@ -20,7 +29,8 @@ export default class App extends React.Component {
       }
     };
 
-    return fetch('http://192.168.1.54:8000/api/measurement', params)
+    /*return fetch('http://192.168.1.54:8000/api/measurement', params)*/ 
+    return fetch('http://10.161.193.98:8000/api/measurement', params)
     .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
