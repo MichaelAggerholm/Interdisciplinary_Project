@@ -1,0 +1,94 @@
+import React from 'react';
+import { View, TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  item: {
+    padding: 10,
+    marginVertical: 5,
+    borderWidth: 1,
+    borderColor: '#ccc'
+  }
+});
+
+class MeasurementsScreen extends React.Component {
+  state = {
+    isLoading: true,
+    dataSource: []
+  };
+
+  componentDidMount() {
+    this.fetchData(); // Fetch data on component mount
+
+    this.interval = setInterval(() => {
+      this.fetchData();
+    }, 5000); // Fetch data every 5 seconds
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  fetchData() {
+    var params = {
+      method: 'GET',
+      headers: {
+        "cache-control": 'no-cache',
+        pragma: 'no-cache'
+      }
+    };
+
+    fetch('http://192.168.1.54:8000/api/measurement', params)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  render() {
+    const { navigation } = this.props;
+
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator />
+        </View>
+      );
+    } else {
+      let measurements = this.state.dataSource.map((val, key) => {
+        return (
+          <View key={key} style={styles.item}>
+            <Text>{val.hardwareUnit} - {val.measurementType} : {val.value}</Text>
+          </View>
+        );
+      });
+
+      return (
+        <View style={styles.container}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text>Back</Text>
+          </TouchableOpacity>
+          <Text style={styles.title}>Measurements</Text>
+          {/* Display the latest 5 measurements from API */}
+          {measurements.slice(Math.max(measurements.length - 5, 0))}
+        </View>
+      );
+    }
+  }
+}
+export default MeasurementsScreen;
