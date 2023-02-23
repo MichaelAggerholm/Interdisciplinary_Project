@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import HomeScreen from './components/HomeScreen';
 import MeasurementsScreen from './components/MeasurementsScreen';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   }
 });
 
@@ -25,7 +25,11 @@ const App = () => {
   
   return (
     <View style={styles.container}>
+      <View style={{flex: 0.15, backgroundColor: '#06bcee', alignItems: 'center', justifyContent: 'center'}}>
+        <Text style={{fontWeight: 'bold', fontSize: 16}}>Measurement App</Text>
+      </View>
       {renderScreen()}
+      <View style={{flex: 0.15, backgroundColor: '#06bcee'}} />
     </View>
   );
 };
