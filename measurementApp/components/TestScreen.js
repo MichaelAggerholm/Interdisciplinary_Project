@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class MeasurementsScreen extends React.Component {
+class TestScreen extends React.Component {
   state = {
     isLoading: true,
     dataSource: []
@@ -47,7 +47,7 @@ class MeasurementsScreen extends React.Component {
       }
     };
 
-    fetch('http://192.168.1.54:8000/api/measurement/2', params)
+    fetch('http://192.168.1.54:8000/api/measurement/1', params)
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
@@ -73,6 +73,7 @@ class MeasurementsScreen extends React.Component {
       let measurements = this.state.dataSource.map((val, key) => {
         return (
           <View key={key} style={styles.item}>
+            
             <Text>{val.hardwareUnit} - {val.measurementType} : {val.value}</Text>
           </View>
         );
@@ -91,4 +92,4 @@ class MeasurementsScreen extends React.Component {
     }
   }
 }
-export default MeasurementsScreen;
+export default TestScreen;

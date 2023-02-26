@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class MeasurementsScreen extends React.Component {
+class FetchComponent extends React.Component {
   state = {
     isLoading: true,
     dataSource: []
@@ -47,7 +47,8 @@ class MeasurementsScreen extends React.Component {
       }
     };
 
-    fetch('http://192.168.1.54:8000/api/measurement/2', params)
+    // fetch URL and id as params from app.js
+    fetch(this.props.navigation.testUrl + this.props.navigation.testId, params)
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
@@ -91,4 +92,4 @@ class MeasurementsScreen extends React.Component {
     }
   }
 }
-export default MeasurementsScreen;
+export default FetchComponent;

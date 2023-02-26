@@ -15,16 +15,19 @@ use App\Entity\Measurement;
 #[Route('/api', name: 'api_')]
 class MeasurementController extends AbstractController
 {
-    #[Route('/measurement', name: 'measurement_index', methods: ['GET', 'HEAD'])]
-    public function index(ManagerRegistry $doctrine): JsonResponse
+    #[Route('/measurement/{id}', name: 'measurement_index', methods: ['GET'])]
+    public function index(ManagerRegistry $doctrine, int $id): JsonResponse
     {
-        $measurements = $doctrine->getRepository(Measurement::class)->findAll();
+        // Hent alle measurements forbundet med et specifikt HardwareUnit ID
+        $entityManager = $doctrine->getManager();
+        $measurements = $entityManager->getRepository(Measurement::class)->findBy(['hardwareUnitId' => $id]);
 
         $data = [];
 
         foreach ($measurements as $measurement) {
             $data[] = [
                 'id' => $measurement->getId(),
+                'hardwareUnitId' => $measurement->getHardwareUnitId()->getId(),
                 'hardwareUnit' => $measurement->getHardwareUnitId()->getName(),
                 'measurementType' => $measurement->getMeasurementTypeId()->getName(),
                 'value' => $measurement->getValue(),
