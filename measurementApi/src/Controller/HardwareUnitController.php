@@ -42,16 +42,16 @@ class HardwareUnitController extends AbstractController
 
         // Få fat i specifik relationel data "Hardware unit type"
         $hardwareUnitType = $entityManager->getRepository(HardwareUnitType::class)
-            ->find((int) $request->request->get('hardwareUnitTypeId'));
+            ->find(json_decode($request->getContent())->hardwareUnitTypeId);
 
         // Få fat i specifik relationel data "Hardware placement"
         $hardwarePlacement = $entityManager->getRepository(HardwarePlacement::class)
-            ->find((int) $request->request->get('hardwarePlacementId'));
+            ->find(json_decode($request->getContent())->hardwarePlacementId);
 
         $hardwareUnit = new HardwareUnit();
         $hardwareUnit->setHardwareUnitTypeId($hardwareUnitType);
         $hardwareUnit->setHardwarePlacementId($hardwarePlacement);
-        $hardwareUnit->setName($request->request->get('name'));
+        $hardwareUnit->setName(json_decode($request->getContent())->name);
         $hardwareUnit->setCreatedDate(new \DateTime());
         $hardwareUnit->setEditedDate(new \DateTime());
 
@@ -94,7 +94,7 @@ class HardwareUnitController extends AbstractController
 
         // Få fat i specifik relationel data "Hardware unit type"
         $hardwareUnitTypeId = $entityManager->getRepository(HardwareUnitType::class)
-            ->find((int) $request->request->get('hardwareUnitTypeId'));
+            ->find(json_decode($request->getContent())->hardwareUnitTypeId);
 
         if ( ! $hardwareUnitTypeId) {
             return $this->json('Hardware unit type blev ikke fundet', 404);
@@ -102,7 +102,7 @@ class HardwareUnitController extends AbstractController
 
         // Få fat i specifik relationel data "Hardware placement"
         $hardwarePlacementId = $entityManager->getRepository(HardwarePlacement::class)
-            ->find((int) $request->request->get('hardwarePlacementId'));
+            ->find(json_decode($request->getContent())->hardwarePlacementId);
 
         if ( ! $hardwarePlacementId) {
             return $this->json('Hardware placement blev ikke fundet', 404);
@@ -110,7 +110,7 @@ class HardwareUnitController extends AbstractController
 
         $hardwareUnit->setHardwareUnitTypeId($hardwareUnitTypeId);
         $hardwareUnit->setHardwarePlacementId($hardwarePlacementId);
-        $hardwareUnit->setName($request->request->get('name'));
+        $hardwareUnit->setName(json_decode($request->getContent())->name);
         $hardwareUnit->setEditedDate(new \DateTime());
 
         $entityManager->flush();

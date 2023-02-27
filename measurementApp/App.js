@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
-import HomeScreen from './components/HomeScreen';
-import MeasurementsScreen from './components/MeasurementsScreen';
-import TestScreen from './components/TestScreen';
-import FetchOneComponent from './components/FetchOneComponent';
 import { StyleSheet, View, Text } from 'react-native';
+import HomeMenuComponent from './components/HomeMenuComponent';
+// Unit components
+import UnitMenuComponent from './components/unitComponents/UnitMenuComponent';
+import FetchUnitsComponent from './components/unitComponents/FetchUnitsComponent';
+import CreateUnitComponent from './components/unitComponents/CreateUnitComponent';
+import EditUnitComponent from './components/unitComponents/EditUnitComponent';
+import DeleteUnitComponent from './components/unitComponents/DeleteUnitComponent'
+// Measurement components
+import MeasurementMenuComponent from './components/measurementComponents/MeasurementMenuComponent';
+import FetchMeasurementsComponent from './components/measurementComponents/FetchMeasurementsComponent';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,28 +18,65 @@ const styles = StyleSheet.create({
 });
 
 const App = () => {
-  const [screen, setScreen] = useState('Home');
+  const [component, setComponent] = useState('HomeMenu');
+  const apiUrl = 'http://10.161.5.224:8000';
   
-  const renderScreen = () => {
-    switch(screen) {
-      case 'Home':
-        return <HomeScreen navigation={{ navigate: setScreen }} />;
-      case 'Measurements':
-        return <MeasurementsScreen navigation={{ navigate: setScreen, goBack: () => setScreen('Home') }} />;
-      case 'Test':
-        return <TestScreen navigation={{ navigate: setScreen, goBack: () => setScreen('Home') }} />;
-      // Test 1 with params 
-      case 'FetchOne':
-        return <FetchOneComponent navigation={{ navigate: setScreen, goBack: () => setScreen('Home'), testUrl: 'http://192.168.1.54:8000/api/measurement/', testId: 1 }} />;
-      // Test 2 with params 
-      case 'FetchTwo':
-        return <FetchOneComponent navigation={{ navigate: setScreen, goBack: () => setScreen('Home'), testUrl: 'http://192.168.1.54:8000/api/measurement/', testId: 2 }} />;
-      // Test 3 with params 
-      case 'FetchThree':
-        return <FetchOneComponent navigation={{ navigate: setScreen, goBack: () => setScreen('Home'), testUrl: 'http://192.168.1.54:8000/api/measurement/', testId: 3 }} />;
+  const renderComponent = () => {
+    switch(component) {
+      case 'HomeMenu':
+        return <HomeMenuComponent navigation={{ navigate: setComponent }} />;
+      case 'UnitMenu':
+        return <UnitMenuComponent navigation={{ 
+          navigate: setComponent, 
+          goBack: () => setComponent('HomeMenu'), // Gå tilbage til hovedmenu
+        }} />;
+      case 'UnitList':
+        return <FetchUnitsComponent navigation={{ 
+          navigate: setComponent, 
+          goBack: () => setComponent('UnitMenu'), // Gå tilbage til enhedsmenu
+          fetchUrl: apiUrl + '/api/hardwareUnit'
+        }} />;
+      case 'UnitCreate':
+        return <CreateUnitComponent navigation={{
+          navigate: setComponent, 
+          goBack: () => setComponent('UnitMenu'), // Gå tilbage til enhedsmenu
+          postUrl: apiUrl + '/api/hardwareUnit'
+        }} />;
+      case 'UnitEdit':
+        return <EditUnitComponent navigation={{ 
+          navigate: setComponent, 
+          goBack: () => setComponent('UnitMenu'), // Gå tilbage til enhedsmenu
+          postUrl: apiUrl + '/api/hardwareUnit/',
+          unitId: 12
+        }} />;
+      case 'UnitDelete':
+        return <DeleteUnitComponent navigation={{ 
+          navigate: setComponent, 
+          goBack: () => setComponent('UnitMenu'), // Gå tilbage til enhedsmenu
+          deleteUrl: apiUrl + '/api/hardwareUnit/',
+          unitId: 3
+        }} />;
+      case 'MeasurementMenu':
+        return <MeasurementMenuComponent navigation={{ 
+          navigate: setComponent, 
+          goBack: () => setComponent('HomeMenu'), // Gå tilbage til hovedmenu
+        }} />;
+      case 'MeasurementsUnitOne':
+        return <FetchMeasurementsComponent navigation={{ 
+          navigate: setComponent, 
+          goBack: () => setComponent('MeasurementMenu'), // Gå tilbage til målingsmenu
+          fetchUrl: apiUrl + '/api/measurement/',
+          measurementId : 1
+        }} />;
+      case 'MeasurementsUnitTwo':
+        return <FetchMeasurementsComponent navigation={{ 
+          navigate: setComponent, 
+          goBack: () => setComponent('MeasurementMenu'), // Gå tilbage til målingsmenu
+          fetchUrl: apiUrl + '/api/measurement/',
+          measurementId : 2
+        }} />;
       default:
-        return <HomeScreen navigation={{ navigate: setScreen }} />;
-        // TODO: rename screens to components.. fuck that screen stuff. ITS COMPONENTS! make FetchAllComponent.js
+        return <HomeMenuComponent navigation={{ navigate: setComponent }} />;
     }
   };
   
@@ -42,7 +85,7 @@ const App = () => {
       <View style={{flex: 0.15, backgroundColor: '#06bcee', alignItems: 'center', justifyContent: 'center'}}>
         <Text style={{fontWeight: 'bold', fontSize: 16}}>Measurement App</Text>
       </View>
-      {renderScreen()}
+      {renderComponent()}
       <View style={{flex: 0.15, backgroundColor: '#06bcee'}} />
     </View>
   );

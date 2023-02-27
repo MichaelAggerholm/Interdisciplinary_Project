@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class MeasurementsScreen extends React.Component {
+class FetchUnitsComponent extends React.Component {
   state = {
     isLoading: true,
     dataSource: []
@@ -47,7 +47,8 @@ class MeasurementsScreen extends React.Component {
       }
     };
 
-    fetch('http://192.168.1.54:8000/api/measurement/2', params)
+    // fetch URL and id as params from app.js
+    fetch(this.props.navigation.fetchUrl, params)
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
@@ -73,7 +74,7 @@ class MeasurementsScreen extends React.Component {
       let measurements = this.state.dataSource.map((val, key) => {
         return (
           <View key={key} style={styles.item}>
-            <Text>{val.hardwareUnit} - {val.measurementType} : {val.value}</Text>
+            <Text>{val.name}</Text>
           </View>
         );
       });
@@ -81,14 +82,13 @@ class MeasurementsScreen extends React.Component {
       return (
         <View style={styles.container}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text>Back</Text>
+            <Text style={{marginTop: 20}}>Tilbage</Text>
           </TouchableOpacity>
-          <Text style={styles.title}>Measurements</Text>
-          {/* Display the latest 5 measurements from API */}
-          {measurements.slice(Math.max(measurements.length - 5, 0))}
+          <Text style={styles.title}>Enheder</Text>
+          {measurements}
         </View>
       );
     }
   }
 }
-export default MeasurementsScreen;
+export default FetchUnitsComponent;
