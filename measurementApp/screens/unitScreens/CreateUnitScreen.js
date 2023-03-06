@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc'
   }
 });
+
 class CreateUnitComponent extends React.Component {
 
   postData(postUrl) {

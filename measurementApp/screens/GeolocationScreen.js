@@ -55,7 +55,7 @@ const GeolocationComponent = ({ navigation }) => {
         <Text style={styles.title}>Waiting..</Text>
       )}
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={{marginTop: 20}}>Tilbage</Text>
+        <Text style={{marginTop: 20}}>Tilbage til hovedmenu</Text>
       </TouchableOpacity>
     </View>
   );
