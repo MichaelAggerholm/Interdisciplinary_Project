@@ -10,6 +10,9 @@ const HomeComponent = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate('MeasurementMenu')}>
         <Text>Målinger</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Geolocation')}>
+        <Text>Geolocation</Text>
+      </TouchableOpacity>
     </View>
   );
 };

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import HomeMenuComponent from './components/HomeMenuComponent';
+import GeolocationComponent from './components/GeolocationComponent';
 // Unit components
 import UnitMenuComponent from './components/unitComponents/UnitMenuComponent';
 import FetchUnitsComponent from './components/unitComponents/FetchUnitsComponent';
 import CreateUnitComponent from './components/unitComponents/CreateUnitComponent';
 import EditUnitComponent from './components/unitComponents/EditUnitComponent';
-import DeleteUnitComponent from './components/unitComponents/DeleteUnitComponent'
+import DeleteUnitComponent from './components/unitComponents/DeleteUnitComponent';
 // Measurement components
 import MeasurementMenuComponent from './components/measurementComponents/MeasurementMenuComponent';
 import FetchMeasurementsComponent from './components/measurementComponents/FetchMeasurementsComponent';
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
 
 const App = () => {
   const [component, setComponent] = useState('HomeMenu');
-  const apiUrl = 'http://10.161.5.224:8000';
+  const apiUrl = 'http://192.168.1.54:8000';
   
   const renderComponent = () => {
     switch(component) {
@@ -27,6 +28,11 @@ const App = () => {
         return <HomeMenuComponent navigation={{ navigate: setComponent }} />;
       case 'UnitMenu':
         return <UnitMenuComponent navigation={{ 
+          navigate: setComponent, 
+          goBack: () => setComponent('HomeMenu'), // Gå tilbage til hovedmenu
+        }} />;
+      case 'Geolocation':
+        return <GeolocationComponent navigation={{ 
           navigate: setComponent, 
           goBack: () => setComponent('HomeMenu'), // Gå tilbage til hovedmenu
         }} />;
