@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Button, TextInput, View, Text } from "react-native";
+import { View, Text } from "react-native";
 import TextInputField from "../../components/TextInputField";
 import { commonStyles } from "../../components/Styles";
 import Api from "../../components/Api";
 import Btn from "../../components/Btn";
 
-class CreateUnitScreen extends Component {
+class HandleUnitScreen extends Component {
   state = {
     name: "",
     hardwareUnitTypeId: "",
@@ -26,10 +26,13 @@ class CreateUnitScreen extends Component {
     this.setState({ hardwarePlacementId });
   };
 
-  handleCreateUnit = async () => {
+  handleEditUnit = async () => {
     const { name, hardwareUnitTypeId, hardwarePlacementId } = this.state;
-    const url = "/api/hardwareUnit";
-    const method = "POST";
+    const { route } = this.props;
+    const { unitId } = route.params;
+
+    const url = "/api/hardwareUnit/" + unitId;
+    const method = "PUT";
     const body = {
       name,
       hardwareUnitTypeId,
@@ -40,11 +43,35 @@ class CreateUnitScreen extends Component {
       const response = await this.api.request(method, url, body);
       if (response && response.status === 200) {
         this.setState({
-          successMessage: "Enhed oprettet!",
+          successMessage: "Enhed redigeret!",
         });
       } else {
         this.setState({
-          errorMessage: "Det lykkedes ikke at oprette enhed!",
+          errorMessage: "Det lykkedes ikke at redigere enhed!",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  handleDeleteUnit = async () => {
+    const { route } = this.props;
+    const { unitId } = route.params;
+
+    const url = "/api/hardwareUnit/" + unitId;
+    const method = "DELETE";
+    const body = {};
+
+    try {
+      const response = await this.api.request(method, url, body);
+      if (response && response.status === 200) {
+        this.setState({
+          successMessage: "Enhed Slettet!",
+        });
+      } else {
+        this.setState({
+          errorMessage: "Det lykkedes ikke at slette enhed!",
         });
       }
     } catch (error) {
@@ -54,12 +81,15 @@ class CreateUnitScreen extends Component {
 
   render() {
     const { successMessage, errorMessage } = this.state;
-    const { navigation } = this.props;
+    const { navigation, route } = this.props;
+    const { unitId, unitName } = route.params;
 
     return (
       <View style={commonStyles.container}>
+        <Text>Du håndterer enhed med id: {unitId}</Text>
+
         <TextInputField
-          placeholder="Name"
+          placeholder={unitName}
           onChangeText={this.handleNameChange}
           value={this.state.name}
         />
@@ -73,14 +103,18 @@ class CreateUnitScreen extends Component {
           onChangeText={this.handleHardwarePlacementIdChange}
           value={this.state.hardwarePlacementId}
         />
-        <Btn text="Opret enhed" onPress={this.handleCreateUnit} />
+        <Btn text="Rediger enhed" onPress={this.handleEditUnit} />
         {successMessage && <Text>{successMessage}</Text>}
         {errorMessage && <Text>{errorMessage}</Text>}
-        <Btn text="Gå tilbage" onPress={() => navigation.navigate("Units")} />
+        <Btn text="Slet enhed" onPress={this.handleDeleteUnit} />
+        <Btn
+          text="Gå tilbage"
+          onPress={() => navigation.navigate("UnitsList")}
+        />
         <Api ref={(api) => (this.api = api)} />
       </View>
     );
   }
 }
 
-export default CreateUnitScreen;
+export default HandleUnitScreen;

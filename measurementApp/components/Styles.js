@@ -1,0 +1,60 @@
+import { StyleSheet } from "react-native";
+
+export const commonStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+  },
+  title: {
+    fontSize: 15,
+    color: "#000",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase",
+    margin: 10,
+  },
+  item: {
+    padding: 10,
+    marginVertical: 5,
+    borderWidth: 1,
+    borderColor: "#ccc",
+  },
+  button: {
+    elevation: 1,
+    backgroundColor: "#73bbdb",
+    borderRadius: 10,
+    margin: 2,
+    width: "100%",
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: {
+    fontSize: 15,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase",
+  },
+  textInput: {
+    width: "100%",
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    position: "relative",
+    alignSelf: "center",
+    borderRadius: 10,
+    margin: 2,
+    textAlign: "center",
+    fontSize: 15,
+  },
+  listContainer: {
+    flex: 0.5,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+});

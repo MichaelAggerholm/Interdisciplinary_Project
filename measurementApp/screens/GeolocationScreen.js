@@ -1,64 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
+import React, { Component } from "react";
+import { View, TouchableOpacity, Text } from "react-native";
+import {
+  requestForegroundPermissionsAsync,
+  getCurrentPositionAsync,
+} from "expo-location";
+import { commonStyles } from "../components/Styles";
+import Btn from "../components/Btn";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10
-  },
-  item: {
-    padding: 10,
-    marginVertical: 5,
-    borderWidth: 1,
-    borderColor: '#ccc'
+class GeolocationScreen extends Component {
+  state = {
+    location: null,
+    errorMsg: null,
+  };
+
+  componentDidMount() {
+    this.getLocationAsync();
   }
-});
 
-const GeolocationComponent = ({ navigation }) => {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-
-  useEffect(() => {
-    const getLocationAsync = async () => {
-      try {
-        const { granted } = await requestForegroundPermissionsAsync();
-        if (!granted) {
-          setErrorMsg('Permission to access location was denied');
-          return;
-        }
-        const userLocation = await getCurrentPositionAsync({accuracy: 6});
-        setLocation(userLocation);
-      } catch (error) {
-        setErrorMsg(error.message);
+  getLocationAsync = async () => {
+    try {
+      const { granted } = await requestForegroundPermissionsAsync();
+      if (!granted) {
+        this.setState({ errorMsg: "Tilladelse afvist!" });
+        return;
       }
-    };
-    getLocationAsync();
-  }, []);
+      const userLocation = await getCurrentPositionAsync({ accuracy: 6 });
+      this.setState({ location: userLocation });
+    } catch (error) {
+      this.setState({ errorMsg: error.message });
+    }
+  };
 
-  return (
-    <View style={styles.container}>
-      {errorMsg ? <Text>{errorMsg}</Text> :
-      location ? (
-        <View>
-          <Text style={styles.title}>Current Location:</Text>
-          <Text style={styles.item}>Latitude: {location.coords.latitude}</Text>
-          <Text style={styles.item}>Longitude: {location.coords.longitude}</Text>
-        </View>
-      ) : (
-        <Text style={styles.title}>Waiting..</Text>
-      )}
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={{marginTop: 20}}>Tilbage til hovedmenu</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+  render() {
+    const { location, errorMsg } = this.state;
+    const { navigation } = this.props;
 
-export default GeolocationComponent;
+    return (
+      <View style={commonStyles.container}>
+        {errorMsg ? (
+          <Text>{errorMsg}</Text>
+        ) : location ? (
+          <View>
+            <Text style={commonStyles.title}>Nuværende lokation:</Text>
+            <Text style={commonStyles.item}>
+              Breddegrad: {location.coords.latitude}
+            </Text>
+            <Text style={commonStyles.item}>
+              Længdegrad: {location.coords.longitude}
+            </Text>
+          </View>
+        ) : (
+          <Text style={commonStyles.title}>Venter..</Text>
+        )}
+        <Btn
+          text="Gå tilbage hovedmenu"
+          onPress={() => navigation.navigate("Home")}
+        />
+      </View>
+    );
+  }
+}
+
+export default GeolocationScreen;
