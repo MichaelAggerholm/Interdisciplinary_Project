@@ -9,6 +9,7 @@ const TextInputField = ({ placeholder, onChangeText, value }) => {
       placeholder={placeholder}
       onChangeText={onChangeText}
       value={value}
+      // keyboardType="numeric"
     />
   );
 };

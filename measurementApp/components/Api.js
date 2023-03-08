@@ -28,10 +28,11 @@ class Api extends Component {
         },
         body: body ? JSON.stringify(body) : undefined,
       });
+      // console.log(response);
       const data = await response.json();
       // console.log(data);
       this.setState({ isLoading: false, data, error: null });
-      return response;
+      return { response, data };
     } catch (error) {
       this.setState({ isLoading: false, data: [], error });
     }

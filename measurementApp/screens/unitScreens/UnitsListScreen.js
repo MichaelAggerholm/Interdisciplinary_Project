@@ -19,6 +19,8 @@ class UnitsListScreen extends Component {
               navigation.navigate("UnitHandle", {
                 unitId: item.id,
                 unitName: item.name,
+                unitType: item.hardwareUnitTypeId,
+                unitPlacement: item.hardwarePlacementId,
               })
             }
           />
