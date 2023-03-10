@@ -20,7 +20,7 @@ class Api extends Component {
 
   request = async (method, url, body) => {
     try {
-      const response = await fetch("http://192.168.1.54:8000" + url, {
+      const response = await fetch("http://10.161.72.30:8000" + url, {
         method: method,
         headers: {
           Accept: "application/json",
