@@ -12,18 +12,6 @@ export default class MeasurementsScreen extends React.Component {
           Her skal listes enheder, ved klik på enhed, skal man se enhedes
           målinger som liste, på measurementsListScreen
         </Text>
-        {/*<Btn
-          text="Enhedsliste"
-          onPress={() => navigation.navigate("UnitsList")}
-        />
-        <Btn
-          text="Opret enhed"
-          onPress={() => navigation.navigate("UnitCreate")}
-        />
-        <Btn
-          text="Gå tilbage hovedmenu"
-          onPress={() => navigation.navigate("Home")}
-    />*/}
       </View>
     );
   }

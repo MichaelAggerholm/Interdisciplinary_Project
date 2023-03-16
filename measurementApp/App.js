@@ -40,7 +40,10 @@ export default class AppNavigator extends React.Component {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Geolocation" component={GeolocationScreen} />
           {/* measurement Screens */}
-          <Stack.Screen name="Measurements" component={MeasurementsScreen} />
+          <Stack.Screen
+            name="Measurements"
+            component={MeasurementsListScreen}
+          />
           <Stack.Screen
             name="MeasurementsList"
             component={MeasurementsListScreen}

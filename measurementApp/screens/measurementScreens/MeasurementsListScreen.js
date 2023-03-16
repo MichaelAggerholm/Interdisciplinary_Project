@@ -14,14 +14,13 @@ class MeasurementsListScreen extends Component {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Btn
-            text={item.name}
-            onPress={() =>
-              navigation.navigate("UnitHandle", {
-                unitId: item.id,
-                unitName: item.name,
-                unitType: item.hardwareUnitTypeId,
-                unitPlacement: item.hardwarePlacementId,
-              })
+            text={
+              item.hardwareUnit +
+              " - " +
+              item.measurementType +
+              " : " +
+              item.value +
+              "°"
             }
           />
         )}
@@ -34,11 +33,11 @@ class MeasurementsListScreen extends Component {
 
     return (
       <View style={commonStyles.container}>
-        <Text>klik på en enhed, for enten at redigere, eller slette</Text>
+        <Text>Seneste målinger fra denne enhed:</Text>
         <View style={{ width: "100%", height: "50%", margin: "10%" }}>
           <Api
             renderItem={this.renderData}
-            url="/api/hardwareUnit"
+            url="/api/measurement"
             method="GET"
           />
         </View>

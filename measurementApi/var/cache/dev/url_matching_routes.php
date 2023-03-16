@@ -20,7 +20,10 @@ return [
             [['_route' => 'api_hardwareUnitType_index', '_controller' => 'App\\Controller\\HardwareUnitTypeController::index'], null, ['GET' => 0, 'HEAD' => 1], null, false, false, null],
             [['_route' => 'api_hardwareUnitType_new', '_controller' => 'App\\Controller\\HardwareUnitTypeController::new'], null, ['POST' => 0], null, false, false, null],
         ],
-        '/api/measurement' => [[['_route' => 'api_measurement_new', '_controller' => 'App\\Controller\\MeasurementController::new'], null, ['POST' => 0], null, false, false, null]],
+        '/api/measurement' => [
+            [['_route' => 'api_measurement_index', '_controller' => 'App\\Controller\\MeasurementController::index'], null, ['GET' => 0], null, false, false, null],
+            [['_route' => 'api_measurement_new', '_controller' => 'App\\Controller\\MeasurementController::new'], null, ['POST' => 0], null, false, false, null],
+        ],
         '/api/measurementType' => [
             [['_route' => 'api_measurementType_index', '_controller' => 'App\\Controller\\MeasurementTypeController::index'], null, ['GET' => 0, 'HEAD' => 1], null, false, false, null],
             [['_route' => 'api_measurementType_new', '_controller' => 'App\\Controller\\MeasurementTypeController::new'], null, ['POST' => 0], null, false, false, null],
@@ -72,7 +75,6 @@ return [
             [['_route' => 'api_hardwareUnitType_delete', '_controller' => 'App\\Controller\\HardwareUnitTypeController::delete'], ['id'], ['DELETE' => 0], null, false, true, null],
         ],
         171 => [
-            [['_route' => 'api_measurement_index', '_controller' => 'App\\Controller\\MeasurementController::index'], ['id'], ['GET' => 0], null, false, true, null],
             [['_route' => 'api_measurement_show', '_controller' => 'App\\Controller\\MeasurementController::show'], ['id'], ['GET' => 0], null, false, true, null],
             [['_route' => 'api_measurement_edit', '_controller' => 'App\\Controller\\MeasurementController::edit'], ['id'], ['PUT' => 0], null, false, true, null],
             [['_route' => 'api_measurement_delete', '_controller' => 'App\\Controller\\MeasurementController::delete'], ['id'], ['DELETE' => 0], null, false, true, null],

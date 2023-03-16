@@ -9,7 +9,7 @@ export default class MainScreen extends React.Component {
     return (
       <View style={commonStyles.container}>
         <Text style={commonStyles.title}>Hovedmenu</Text>
-        <Btn text="Test" onPress={() => navigation.navigate("Test")} />
+        {/*<Btn text="Test" onPress={() => navigation.navigate("Test")} />*/}
         <Btn text="Enheder" onPress={() => navigation.navigate("Units")} />
         <Btn
           text="Enhedstyper"
